@@ -136,6 +136,13 @@ export default function reactTreeWalker(
 
         // Make the setState synchronous.
         instance.setState = newState => {
+          if (typeof newState === 'function') {
+            newState = newState(
+              instance.state,
+              instance.props,
+              instance.context,
+            );
+          }
           instance.state = Object.assign({}, instance.state, newState)
         }
 
